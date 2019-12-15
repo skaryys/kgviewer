@@ -5,14 +5,30 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Knowledge Graph Viewer',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover' },
+      { name: 'theme-color', content: '#282828' },
+      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { property: 'og:title', content: 'Knowledge Graph Viewer' },
+      { property: 'og:description', name: 'description', content: 'Umožňuje zkoumání vztahů mezi entitami v rámci Google Knowledge Graph.' },
+      { property: 'og:url', content: 'localhost:3000' }, //TODO změnit po nasazení na produkci
+      { property: 'og:image', content: 'localhost:3000/ogimage.jpg' }, //TODO změnit po nasazení na produkci
+      { property: 'og:site_name', content: 'Knowledge Graph Viewer' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:locale', content: 'cs_CZ' },
+      { name: 'msapplication-TileColor', content: '#2b5797' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'author', href: 'http://skaramart.in' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+      { rel: 'manifest', href: '/site.webmanifest' },
+      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#5bbad5' }
     ]
   },
   /*
@@ -22,8 +38,7 @@ export default {
   /*
   ** Global CSS
   */
-  css: [
-  ],
+  css: [],
   /*
   ** Plugins to load before mounting the App
   */
@@ -37,10 +52,7 @@ export default {
   /*
   ** Nuxt.js modules
   */
-  modules: [
-    // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
-  ],
+  modules: [],
   /*
   ** Build configuration
   */

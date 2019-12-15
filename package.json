@@ -1,6 +1,6 @@
 {
   "name": "kgviewer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "umožňuje zkoumání vztahů mezi entitami v rámci Google Knowledge Graph",
   "author": "Martin Škára",
   "private": true,
@@ -11,8 +11,9 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "node-sass": "^4.13.0",
     "nuxt": "^2.0.0",
-    "@nuxtjs/bulma": "^1.2.1"
+    "sass-loader": "^8.0.0"
   },
   "devDependencies": {}
 }
