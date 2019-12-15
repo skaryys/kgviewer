@@ -1,0 +1,46 @@
+//font-weight
+$regular: 400;
+$bold: 700;
+
+//colors
+$white: white;
+$black: black;
+
+//fonts
+$baseFont: 'Roboto', -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, "Fira Sans", "Droid Sans", Ubuntu, Cantarell, sans-serif; //change it according to your project
+
+//GRID SETTINGS
+$parts: "columns","orders","align-self","hide","directions", "wraps","justify","items", "content";
+$columns: 12;
+$columnsSpace: 3rem;
+//breakpoints in em (Breakpoint * font size = breakpoint in pixels)
+$screen-xs: 30em;
+$screen-sm: 48em;
+$screen-md: 64em;
+$screen-lg: 75em;
+$screen-xl: 82.5em;
+
+//MENU COMPONENTS SETTINGS
+$menuBg: #282828;
+$menuFontSize: 1.8rem;
+$menuColor: white;
+//menu in hamburger mode
+$menuHeight: 6rem;
+$menuLineHeight: 4.2rem;
+$hamburgerWidth: 3rem;
+$hamburgerHeight: 2rem;
+$hamburgerLineHeight: .2rem;
+$hamburgerLineBg: white;
+$navMarginTop: 1.5rem;
+$navMarginBottom: 1.5rem;
+//breakpoint when hamburger menus change to normal
+$menuBreakpoint: $screen-md;
+//dimension for normal horizontal menu
+$menuDesktopHeight: 10rem;
+$menuDesktopItemsSpace: 6rem;
+//dimension for normal vertical menu
+$menuVerticalLogoTop: 4rem;
+$menuVerticalLogoBottom: 4rem;
+$menuVerticalNavTop: 0;
+$menuVerticalNavBottom: 4rem;
+$menuVerticalLineHeight: 5rem;

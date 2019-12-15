@@ -1,0 +1,142 @@
+//display helper classes
+
+.h-displayBlock {
+  display: block !important;
+}
+
+.h-displayNone {
+  display: none !important;
+}
+
+.h-displayInline {
+  display: inline !important;
+}
+
+.h-displayInlineBlock {
+  display: inline-block !important;
+}
+
+.h-displayTable {
+  display: table !important;
+}
+
+.h-displayTableCell {
+  display: table-cell !important;
+}
+
+.h-displayTableRow {
+  display: table-row !important;
+}
+
+.h-displayGrid {
+  display: grid !important;
+}
+
+.h-displayFlex {
+  display: flex !important;
+}
+
+.h-displayInlineFlex {
+  display: inline-flex !important;
+}
+
+//make circle element
+.h-circle {
+  border-radius: 50%;
+}
+
+//float helper classes
+
+.h-floatLeft {
+  float: left !important;
+}
+
+.h-floatRight {
+  float: right !important;
+}
+
+.h-floatNone {
+  float: none !important;
+}
+
+//Link with underline effect on hover
+
+.h-linkUnderlineHover {
+  text-decoration: none !important;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+//Link with no underline on hover
+
+.h-linkNoneHover {
+  text-decoration: underline !important;
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+//positioning helper classes
+
+.h-positionAbsolute, .h-positionAbsoluteCenter, .h-positionAbsoluteCover {
+  position: absolute !important;
+}
+
+.h-positionRelative {
+  position: relative !important;
+}
+
+.h-positionFixed, .h-positionFixedCenter, .h-positionFixedCover {
+  position: fixed !important;
+}
+
+.h-positionStatic {
+  position: static !important;
+}
+
+.h-positionAbsoluteCenter, .h-positionFixedCenter {
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%,-50%) !important;
+}
+
+.h-positionAbsoluteCover, .h-positionFixedCover {
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+}
+
+.h-positionSticky {
+  position: sticky !important;
+}
+
+//text helper classes
+
+.h-textLeft {
+  text-align: left !important;
+}
+
+.h-textRight {
+  text-align: right !important;
+}
+
+.h-textCenter {
+  text-align: center !important;
+}
+
+.h-textJustify {
+  text-align: justify !important;
+}
+
+.h-whitespaceNowrap {
+  white-space: nowrap !important;
+}
+
+.h-truncate {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}

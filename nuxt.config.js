@@ -23,6 +23,7 @@ export default {
       { name: 'msapplication-TileColor', content: '#2b5797' }
     ],
     link: [
+      { href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap&subset=latin-ext', rel: 'stylesheet' },
       { rel: 'author', href: 'http://skaramart.in' },
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
@@ -38,11 +39,16 @@ export default {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    "~assets/styles/grid/resets.scss",
+    "~assets/styles/grid/utils.scss",
+    "skar-is/assets/scss/components/menu.scss"
+  ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    "~plugins/grid.js"
   ],
   /*
   ** Nuxt.js dev-modules
@@ -52,7 +58,12 @@ export default {
   /*
   ** Nuxt.js modules
   */
-  modules: [],
+  modules: [
+    '@nuxtjs/style-resources'
+  ],
+  styleResources: {
+    scss: ["~assets/styles/grid/settings.scss", "~assets/styles/grid/functions.scss", "~assets/styles/grid/mixins.scss"]
+  },
   /*
   ** Build configuration
   */

@@ -1,0 +1,217 @@
+//calc mixin
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+//disable default inputs styling
+@mixin disableDefaults() {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: inherit;
+  background-color: transparent;
+  &:-webkit-autofill {
+    background: inherit !important;
+    color: inherit !important;
+  }
+  &::-ms-expand {
+    display: none;
+  }
+  &::-webkit-clear-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration {
+    display: none;
+    -webkit-appearance:none;
+  }
+  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+//Apply specific styles for IE
+@mixin ie() {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @content;
+  }
+}
+
+//Apply specific styles for Edge
+@mixin edge() {
+  @supports (-ms-ime-align:auto) {
+    @content;
+  }
+}
+
+//media query for min-width
+@mixin break($screen) {
+  @media screen and (min-width: $screen) {
+    @content;
+  }
+}
+
+@mixin rowInit($columns_count, $breakpoint, $parts: $parts) {
+
+  @each $part in $parts {
+
+    //row flex-direction classes
+    @if $part == "directions" {
+      .#{$breakpoint}-directionRow {
+        flex-direction: row;
+      }
+      .#{$breakpoint}-directionReverse {
+        flex-direction: row-reverse;
+      }
+      .#{$breakpoint}-directionColumn {
+        flex-direction: column;
+
+      }
+      .#{$breakpoint}-directionColumn-reverse {
+        flex-direction: column-reverse;
+      }
+    }
+
+    //row flex-wrap classes
+    @if $part == "wraps" {
+      .#{$breakpoint}-nowrap {
+        flex-wrap: nowrap;
+      }
+      .#{$breakpoint}-wrap {
+        flex-wrap: wrap;
+      }
+      .#{$breakpoint}-wrap-reverse {
+        flex-wrap: wrap-reverse;
+      }
+    }
+
+    //row justify-content classes
+    @if $part == "justify" {
+      .#{$breakpoint}-justifyStart {
+        justify-content: flex-start;
+      }
+      .#{$breakpoint}-justifyEnd {
+        justify-content: flex-end;
+      }
+      .#{$breakpoint}-justifyCenter {
+        justify-content: center;
+      }
+      .#{$breakpoint}-justifyBetween {
+        justify-content: space-between;
+      }
+      .#{$breakpoint}-justifyAround {
+        justify-content: space-around;
+      }
+      .#{$breakpoint}-justifyEvenly {
+        justify-content: space-evenly;
+      }
+    }
+
+    //row align-items classes
+    @if $part == "items" {
+      .#{$breakpoint}-itemsStart {
+        align-items: flex-start;
+      }
+      .#{$breakpoint}-itemsEnd {
+        align-items: flex-end;
+      }
+      .#{$breakpoint}-itemsCenter {
+        align-items: center;
+      }
+      .#{$breakpoint}-itemsBaseline {
+        align-items: baseline;
+      }
+      .#{$breakpoint}-itemsStretch {
+        align-items: stretch;
+      }
+    }
+
+    //row align-content classes
+    @if $part == "content" {
+      .#{$breakpoint}-contentStart {
+        align-content: flex-start;
+      }
+      .#{$breakpoint}-contentEnd {
+        align-content: flex-end;
+      }
+      .#{$breakpoint}-contentCenter {
+        align-content: center;
+      }
+      .#{$breakpoint}-contentBetween {
+        align-content: space-between;
+      }
+      .#{$breakpoint}-contentAround {
+        align-content: space-around;
+      }
+      .#{$breakpoint}-contentStretch {
+        align-content: stretch;
+      }
+    }
+
+  }
+
+}
+
+@mixin colInit($columns_count, $breakpoint, $parts: $parts) {
+
+  @each $part in $parts {
+
+    //columns responsive classes
+    @if $part == "columns" {
+      @for $i from 1 through $columns_count {
+        .#{$breakpoint}-#{$i} {
+          flex: 0 0 #{$i / $columns_count * 100%};
+          max-width: #{$i / $columns_count * 100%};
+        }
+      }
+      .#{$breakpoint}-stretch {
+        flex: none;
+      }
+      .#{$breakpoint}-default {
+        flex: 1 1 0%;
+      }
+    }
+
+    //columns order classes
+    @if $part == "orders" {
+      .#{$breakpoint}-orderFirst {
+        order: -1;
+      }
+      .#{$breakpoint}-orderLast {
+        order: 99;
+      }
+    }
+
+    //columns align-self classes
+    @if $part == "align-self" {
+      .#{$breakpoint}-selfStart {
+        align-self: flex-start;
+      }
+      .#{$breakpoint}-selfEnd {
+        align-self: flex-end;
+      }
+      .#{$breakpoint}-selfCenter {
+        align-self: center;
+      }
+      .#{$breakpoint}-selfBaseline {
+        align-self: baseline;
+      }
+      .#{$breakpoint}-selfStretch {
+        align-self: stretch;
+      }
+    }
+
+    //columns hide
+    @if $part == "hide" {
+      .#{$breakpoint}-hide {
+        display: none;
+      }
+      .#{$breakpoint}-show {
+        display: block;
+      }
+    }
+
+  }
+
+}
