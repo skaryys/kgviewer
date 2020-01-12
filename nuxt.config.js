@@ -1,5 +1,4 @@
-
-export default {
+module.exports = {
   mode: 'universal',
   /*
   ** Headers of the page
@@ -42,7 +41,11 @@ export default {
   css: [
     "~assets/styles/grid/resets.scss",
     "~assets/styles/grid/utils.scss",
-    "skar-is/assets/scss/components/menu.scss"
+    "skar-is/assets/scss/components/menu.scss",
+    "skar-is/assets/scss/components/texts.scss",
+    "skar-is/assets/scss/components/forms.scss",
+    "skar-is/assets/scss/components/card.scss",
+    "skar-is/assets/scss/components/media.scss"
   ],
   /*
   ** Plugins to load before mounting the App
@@ -81,4 +84,4 @@ export default {
     extend (config, ctx) {
     }
   }
-}
+};

@@ -44,3 +44,72 @@ $menuVerticalLogoBottom: 4rem;
 $menuVerticalNavTop: 0;
 $menuVerticalNavBottom: 4rem;
 $menuVerticalLineHeight: 5rem;
+
+//TEXTS
+$headingsMarginBottom: 2rem;
+$headingsFontWeight: 500;
+$h1fontSize: 3.6rem;
+$h2fontSize: 2.7rem;
+$h3fontSize: 2.1rem;
+$paragraphMarginBottom: 2rem;
+$paragraphLine: 1.75;
+$paragraphFontSize: 1.6rem;
+$listPaddingLeft: 2rem;
+$listMarginBottom: 2rem;
+$listLineHeight: 1.75;
+$listItemPaddingLeft: 2rem;
+
+//FORMS COMPONENTS SETTINGS
+//normal inputs
+$textInputHeight: 5rem;
+$textInputPadding: 1.5rem;
+$textInputFontSize: 1.8rem;
+$textInputBorder: .2rem solid #A9A8B2;
+$textInputBorderFocus: .2rem solid #282828;
+$textInputBorderError: .2rem solid red;
+$textInputColor: #A9A8B2;
+$textInputColorFocus: #282828;
+$textInputColorError: red;
+$textInputPlaceholderColor: #A9A8B2;
+//range input
+$rangeInputThumbBorderWidth: .2rem;
+$rangeInputThumbBorderColor: #A9A8B2;
+$rangeInputThumbHeight: 1.6rem;
+$rangeInputThumbWidth: 1.6rem;
+$rangeInputThumbBg: white;
+$rangeInputThumbBorderRadius: 50%;
+$rangeInputSliderHeight: 0.5rem;
+$rangeInputSliderBg: #282828;
+//svg input (radio+checkbox)
+$svgInputWidthHeight: 2.4rem;
+$svgInputPadding: .4rem;
+$svgInputBorder: .2rem solid #A9A8B2;
+$svgInputBg: white;
+$svgInputCheckedBorder: .2rem solid #282828;
+$svgInputCheckedBg: white;
+$svgInputCheckedColor: #282828;
+$svgInputBorderRadius: 50%;
+//selects
+$selectArrowColor: #A9A8B2;
+$selectArrowFocusColor: #282828;
+$selectArrowWidth: 1.6rem;
+$selectArrowHeight: .8rem;
+$selectArrowRight: 1.5rem;
+$selectArrowTop: 2rem;
+//buttons and button-like inputs
+$buttonPadding: 3rem;
+$buttonHeight: 5rem;
+$buttonBg: #282828;
+$buttonColor: white;
+$buttonFontSize: 1.6rem;
+//label
+$labelMarginBottom: 1rem;
+//error
+$errorMarginTop: 1rem;
+$errorMarginBottom: 1rem;
+$errorColor: red;
+
+//CARDS
+$cardBg: white;
+$cardShadow: 0 .5rem 1rem 0 hsla(0,0%,47%,.3);
+$cardPadding: 3rem;

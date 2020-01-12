@@ -10,7 +10,7 @@
             <a href="#">Zobrazit dosavadní graf</a>
           </li>
           <li>
-            <a href="#">Přidat novou entitu do grafu</a>
+            <a href="/add">Přidat novou entitu do grafu</a>
           </li>
         </ul>
       </nav>
