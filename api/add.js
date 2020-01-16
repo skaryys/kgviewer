@@ -2,19 +2,51 @@ const { Router } = require('express');
 const puppeteer = require("puppeteer");
 const axios = require("axios");
 const neo4j = require("neo4j-driver");
-const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "'3{L+ZCp<<m8.n-n"));
 
 const router = Router();
 
-router.get('/add/single', function (req, res, next) {
-  let id = req.param("q");
+router.post('/add/single', function (req, res, next) {
+  const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "'3{L+ZCp<<m8.n-n"));
+  const session = driver.session();
 
-  res.json({"ahoj": id});
+  let typeString = "";
+  const types = req.body["@type"];
+  let i;
+  for (i = 0; i < types.length; i++) {
+    typeString += ":" + types[i];
+  }
+
+  const imageUrl = (typeof(req.body.image) === "undefined") ? null : req.body.image.contentUrl;
+  const description = (typeof(req.body.description) === "undefined") ? null : req.body.description;
+  const entityUrl = (typeof(req.body.url) === "undefined") ? null : req.body.url;
+  const detailedDescription = (typeof(req.body.detailedDescription) === "undefined") ? null : req.body.detailedDescription.articleBody;
+
+  const resultPromise = session.run(
+    "MERGE (n"+typeString+" {id: $id})" +
+    "set n = {name: $name, id: $id, description: $description, detailedDescription: $detailedDescription, image: $image, url: $url}",
+    {
+      name: req.body.name,
+      id: req.body["@id"],
+      description: description,
+      detailedDescription: detailedDescription,
+      image: imageUrl,
+      url: entityUrl
+    }
+  );
+
+  resultPromise.then(result => {
+    session.close();
+    driver.close();
+    res.json({});
+  });
 });
 
-/* TODO - nehotové - přidat příbuzné nodes */
-router.get('/add/relatives', function (req, res, next) {
-    req.setTimeout(500000);
+router.post('/add/relatives', function (req, res, next) {
+
+    console.log("test");
+
+    res.json({});
+    /*req.setTimeout(500000);
     let searchstring = req.param("q");
     let url = 'https://www.google.cz/search?q='+searchstring;
 
@@ -169,7 +201,7 @@ router.get('/add/relatives', function (req, res, next) {
         await browser.close();
         console.log(error("Browser Closed"));
       }
-    })();
+    })();*/
 });
 
 module.exports = router;

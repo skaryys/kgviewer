@@ -22,6 +22,7 @@ async function start () {
     await nuxt.ready()
   }
 
+  app.use(express.json());
   app.use(add);
 
   // Give nuxt middleware to express

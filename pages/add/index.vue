@@ -12,7 +12,7 @@
         <Col :xs="12" :sm="6" :lg="4" :xl="3" style="display: flex; margin-bottom: 3rem;">
           <Card
             :result="entity.result"
-            v-on:add-root="addSingle($event)"
+            v-on:add-root="addNode($event)"
           ></Card>
         </Col>
       </transition>
@@ -49,14 +49,14 @@
   import axios from "axios";
 
   export default {
-    asyncData () {
+    asyncData() {
       return {
         foundEntities: [],
         loader: false
       }
     },
     methods: {
-      findEntities: function() {
+      findEntities: function () {
         const self = this;
         self.loader = true;
         const query = this.$el.querySelector("#entityInput").value;
@@ -75,9 +75,17 @@
         });
       },
 
-      addSingle: function(id) {
-        alert(id.substr(3));
-      }
-    },
+      addNode: function (result) {
+        const self = this;
+        self.loader = true;
+
+        axios.post('/add/single', result).then(function () {
+          axios.post('/add/relatives', result).then(function () {
+            self.loader = false;
+          });
+        });
+      },
+
+    }
   }
 </script>
