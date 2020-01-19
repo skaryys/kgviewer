@@ -79,10 +79,15 @@
         const self = this;
         self.loader = true;
 
-        axios.post('/add/single', result).then(function () {
-          axios.post('/add/relatives', result).then(function () {
-            self.loader = false;
-          });
+        axios.all([
+          axios.post('/add/single', result),
+          axios.post('/add/relatives', result)
+        ]).then(() => {
+          self.loader = false;
+        })
+        .catch(error => {
+          console.log(error);
+          self.loader = false;
         });
       },
 
