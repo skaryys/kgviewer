@@ -5,7 +5,7 @@ const neo4j = require("neo4j-driver");
 
 const processRelationEntities = async function (array, origin) {
   console.log(origin);
-  const driver = await neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "'3{L+ZCp<<m8.n-n"));
+  const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
   for (const link of array) {
     await axios.get('https://kgsearch.googleapis.com/v1/entities:search', {
       params: {
@@ -20,7 +20,7 @@ const processRelationEntities = async function (array, origin) {
         let item = response.data.itemListElement[0].result;
         if (item.name !== 'undefined' && item.name) {
           console.log("přidán příbuzný node "+item.name);
-          const session = await driver.session();
+          const session = driver.session();
           let typeString = "";
           const types = item["@type"];
           let i;
@@ -67,7 +67,7 @@ const processRelationEntities = async function (array, origin) {
 
 const processRelationLinks = async function (array, origin) {
   console.log(origin);
-  const driver = await neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "'3{L+ZCp<<m8.n-n"));
+  const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
   for (const link of array) {
     let browserRelationLinks = await puppeteer.launch({headless: true});
     let pageRelationsLinks = await browserRelationLinks.newPage();
@@ -83,18 +83,22 @@ const processRelationLinks = async function (array, origin) {
 
       if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
         regex = /(mid%3D)(.+?)(%26)/;
-        regexMatch = await regex.exec(kgIdArray[0]);
-        matchedId = await regexMatch[2].toString().replace("%2F", "/");
-        finalId = await matchedId.replace("%2F", "/");
+        regexMatch = regex.exec(kgIdArray[0]);
+        if (regexMatch !== null) {
+          matchedId = regexMatch[2].toString().replace("%2F", "/");
+          finalId = matchedId.replace("%2F", "/");
+        }
       }
 
       if (kgIdArray.length < 1) {
         kgIdArray = await pageRelationsLinks.evaluate(() => Array.from(document.querySelectorAll(".knowledge-panel a.bia"), element => element.getAttribute("href")));
         if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
           regex = /(%252C)(%252F.+?)(&)/;
-          regexMatch = await regex.exec(kgIdArray[0]);
-          matchedId = await regexMatch[2].toString().replace("%252F", "/");
-          finalId = await matchedId.replace("%252F", "/");
+          regexMatch = regex.exec(kgIdArray[0]);
+          if (regexMatch !== null) {
+            matchedId = regexMatch[2].toString().replace("%252F", "/");
+            finalId = matchedId.replace("%252F", "/");
+          }
         }
       }
 
@@ -113,7 +117,7 @@ const processRelationLinks = async function (array, origin) {
 
             if (item.name !== 'undefined' && item.name) {
               console.log("přidán příbuzný node "+item.name);
-              const session = await driver.session();
+              const session = driver.session();
               let typeString = "";
               const types = item["@type"];
               let i;
@@ -167,7 +171,7 @@ const router = Router();
 
 router.post('/add/single', function (req, res, next) {
   req.setTimeout(500000);
-  const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "'3{L+ZCp<<m8.n-n"));
+  const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
   const session = driver.session();
 
   let typeString = "";
@@ -224,18 +228,18 @@ router.post('/add/relatives', function (req, res, next) {
 
             if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
               regex = /(mid%3D)(.+?)(%26)/;
-              regexMatch = await regex.exec(kgIdArray[0]);
-              matchedId = await regexMatch[2].toString().replace("%2F", "/");
-              finalId = await matchedId.replace("%2F", "/");
+              regexMatch = regex.exec(kgIdArray[0]);
+              matchedId = regexMatch[2].toString().replace("%2F", "/");
+              finalId = matchedId.replace("%2F", "/");
             }
 
             if (kgIdArray.length < 1) {
               kgIdArray = await page.evaluate(() => Array.from(document.querySelectorAll(".knowledge-panel a.bia"), element => element.getAttribute("href")));
               if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
                 regex = /(%252C)(%252F.+?)(&)/;
-                regexMatch = await regex.exec(kgIdArray[0]);
-                matchedId = await regexMatch[2].toString().replace("%252F", "/");
-                finalId = await matchedId.replace("%252F", "/");
+                regexMatch = regex.exec(kgIdArray[0]);
+                matchedId = regexMatch[2].toString().replace("%252F", "/");
+                finalId = matchedId.replace("%252F", "/");
               }
             }
 
@@ -256,6 +260,43 @@ router.post('/add/relatives', function (req, res, next) {
           res.json({});
         }
     })();
+});
+
+router.get('/graph', function (req, res, next) {
+  req.setTimeout(500000);
+  const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
+  const session = driver.session();
+
+  let typeString = "";
+  const types = req.body["@type"];
+  let i;
+  for (i = 0; i < types.length; i++) {
+    typeString += ":" + types[i];
+  }
+
+  const imageUrl = (typeof(req.body.image) === "undefined") ? null : req.body.image.contentUrl;
+  const description = (typeof(req.body.description) === "undefined") ? null : req.body.description;
+  const entityUrl = (typeof(req.body.url) === "undefined") ? null : req.body.url;
+  const detailedDescription = (typeof(req.body.detailedDescription) === "undefined") ? null : req.body.detailedDescription.articleBody;
+
+  const resultPromise = session.run(
+    "MERGE (n"+typeString+" {id: $id})" +
+    "set n = {name: $name, id: $id, description: $description, detailedDescription: $detailedDescription, image: $image, url: $url}",
+    {
+      name: req.body.name,
+      id: req.body["@id"],
+      description: description,
+      detailedDescription: detailedDescription,
+      image: imageUrl,
+      url: entityUrl
+    }
+  );
+
+  resultPromise.then(result => {
+    session.close();
+    driver.close();
+    res.json({});
+  });
 });
 
 module.exports = router;

@@ -5,7 +5,7 @@
       </Heading1>
       <Paragraph>
         Tato aplikace slouží k zobrazení vztahů mezi entitami v
-        <a href="https://en.wikipedia.org/wiki/Knowledge_Graph>">Google Knowledge Graph</a>.
+        <a href="https://en.wikipedia.org/wiki/Knowledge_Graph" target="_blank">Google Knowledge Graph</a>.
       </Paragraph>
       <Paragraph>
         Aplikace však nepracuje přímo se samotným znalostním grafem společnosti Google. Ten není veřejně dostupný, respektive s pomocí jeho veřejného API nelze získat informace o vztazích mezi jednotlivými uzly. Z tohoto důvodu tak byla tato aplikace vyvinuta, a pracuje právě již jak se zmíněným API, tak s výsledky klasického vyhledávání pomocí Googlu.<br><br>
