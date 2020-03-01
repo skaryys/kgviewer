@@ -63,6 +63,7 @@ const processRelationEntities = async function (array, origin) {
       return true;
     });
   }
+  driver.close();
 };
 
 const processRelationLinks = async function (array, origin) {
