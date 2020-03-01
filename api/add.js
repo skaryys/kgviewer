@@ -6,8 +6,9 @@ const neo4j = require("neo4j-driver");
 const processRelationEntities = async function (array, origin) {
   console.log(origin);
   const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
-  for (const link of array) {
-    await axios.get('https://kgsearch.googleapis.com/v1/entities:search', {
+
+  const promises =  array.map((link) => {
+    axios.get('https://kgsearch.googleapis.com/v1/entities:search', {
       params: {
         'ids': link[0],
         'limit': 1,
@@ -62,7 +63,9 @@ const processRelationEntities = async function (array, origin) {
       console.log(error);
       return true;
     });
-  }
+    return true;
+  });
+  await Promise.all(promises);
   driver.close();
 };
 
