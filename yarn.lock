@@ -670,6 +670,14 @@
     js-levenshtein "^1.1.3"
     semver "^5.5.0"
 
+"@babel/runtime-corejs3@^7.8.4":
+  version "7.10.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.10.2.tgz#3511797ddf9a3d6f3ce46b99cc835184817eaa4e"
+  integrity sha512-+a2M/u7r15o3dV1NEizr9bRi+KUVnrs/qYxF0Z06DAPx/4VCWaz1WA7EcbE+uqGgt39lp5akWGmHsTseIkHkHg==
+  dependencies:
+    core-js-pure "^3.0.0"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.5.5":
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.0.tgz#8c81711517c56b3d00c6de706b0fb13dc3531549"
@@ -2352,6 +2360,11 @@ core-js-compat@^3.4.7:
     browserslist "^4.8.2"
     semver "^6.3.0"
 
+core-js-pure@^3.0.0:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.5.tgz#c79e75f5e38dbc85a662d91eea52b8256d53b813"
+  integrity sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
+
 core-js@^2.6.5:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
@@ -2884,7 +2897,7 @@ d3-zoom@1:
     d3-selection "1"
     d3-transition "1"
 
-d3@^5.15.0, d3@^5.9.2:
+d3@^5.9.2:
   version "5.15.0"
   resolved "https://registry.yarnpkg.com/d3/-/d3-5.15.0.tgz#ffd44958e6a3cb8a59a84429c45429b8bca5677a"
   integrity sha512-C+E80SL2nLLtmykZ6klwYj5rPqB5nlfN5LdWEAVdWPppqTD8taoJi2PxLZjPeYT8FFRR2yucXq+kBlOnnvZeLg==
@@ -5258,6 +5271,15 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+neo4j-driver@^1.7.5:
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/neo4j-driver/-/neo4j-driver-1.7.6.tgz#eccb135a71eba9048c68717444593a6424cffc49"
+  integrity sha512-6c3ALO3vYDfUqNoCy8OFzq+fQ7q/ab3LCuJrmm8P04M7RmyRCCnUtJ8IzSTGbiZvyhcehGK+azNDAEJhxPV/hA==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    text-encoding-utf-8 "^1.0.2"
+    uri-js "^4.2.2"
+
 neo4j-driver@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/neo4j-driver/-/neo4j-driver-4.0.1.tgz#b25ffde0f16602e94c46d097e16a8bacbd773d5a"
@@ -5267,6 +5289,15 @@ neo4j-driver@^4.0.1:
     rxjs "^6.5.2"
     text-encoding-utf-8 "^1.0.2"
     uri-js "^4.2.2"
+
+neovis.js@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/neovis.js/-/neovis.js-1.4.0.tgz#965a4006b980575afd51105d8de3c5f99e683be7"
+  integrity sha512-oPO9RXeorBxf0pv496jnmU4PtpRSKuQ8DGQYhB0EPVUIxJfcSevSi884gzKsmj8rBzWVqzXqZOJ/EqCKRfcFXw==
+  dependencies:
+    "@babel/runtime-corejs3" "^7.8.4"
+    neo4j-driver "^1.7.5"
+    vis-network "^7.3.5"
 
 no-case@^2.2.0:
   version "2.3.2"
@@ -6866,6 +6897,11 @@ regenerator-runtime@^0.13.2:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
   integrity sha512-naKIZz2GQ8JWh///G7L3X6LaQUAMp2lvb1rvwwsURe/VXwD6VMfr+/1NuNw3ag8v2kY1aQ/go5SNn79O9JU7yw==
 
+regenerator-runtime@^0.13.4:
+  version "0.13.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
+  integrity sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
+
 regenerator-transform@^0.14.0:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/regenerator-transform/-/regenerator-transform-0.14.1.tgz#3b2fce4e1ab7732c08f665dfdb314749c7ddd2fb"
@@ -8237,6 +8273,16 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+vis-network@7.3.3:
+  version "7.3.3"
+  resolved "https://registry.yarnpkg.com/vis-network/-/vis-network-7.3.3.tgz#02501dc1a87ea9fd5870f1f242394e8af31b8844"
+  integrity sha512-cTBQHjcENJ7Nz0vFziXh0C6mf+Q1sKGfRm0J5S39LjSsBqOTOem3xSh2B9mCvgS+LicK5lmqYcdIiNinNMB16w==
+
+vis-network@^7.3.5:
+  version "7.6.9"
+  resolved "https://registry.yarnpkg.com/vis-network/-/vis-network-7.6.9.tgz#80178ae29123f662b416b0da3861acd173974c00"
+  integrity sha512-oXB74TkXEJbhqsS6Iejj6tW+p3UohHzSub2i4lmA2e0CKkWv6MOfSCWMSwyGVLQqw58Dq6ar7/BL5Sr5xrwpvg==
 
 vm-browserify@^1.0.1:
   version "1.1.2"

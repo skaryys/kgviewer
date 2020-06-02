@@ -12,9 +12,13 @@ router.post('/add/single', async function (req, res, next) {
 
   let typeString = "";
   const types = req.body["@type"];
+  const typeIndex = types.indexOf("Thing");
+  if (typeIndex !== -1) types.splice(typeIndex, 1);
   let i;
   for (i = 0; i < types.length; i++) {
-    typeString += ":" + types[i];
+    if (types[i] !== "Thing") {
+      typeString += ":" + types[i];
+    }
   }
 
   const imageUrl = (typeof(req.body.image) === "undefined") ? null : req.body.image.contentUrl;
@@ -53,37 +57,28 @@ router.post('/add/relatives', function (req, res, next) {
           await page.setViewport({width: 1920, height: 1080});
           await page.goto(url, {waitUntil: 'load', timeout: 0});
 
-          if (await page.$(".knowledge-panel") !== null) {
+          if (await page.$("#xfoot") !== null) {
             let kgIdArray;
             let finalId;
             let regex;
             let regexMatch;
             let matchedId;
-            kgIdArray = await page.evaluate(() => Array.from(document.querySelectorAll("kno-share-button g-dialog a"), element => element.getAttribute("href")));
+            kgIdArray = await page.evaluate(() => Array.from(document.querySelectorAll("#xfoot script"), element => element.innerHTML));
 
             if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
-              regex = /(mid%3D)(.+?)(%26)/;
+              regex = /(\\x22)(\/.?\/.+?)(\\x22)/;
               regexMatch = regex.exec(kgIdArray[0]);
-              matchedId = regexMatch[2].toString().replace("%2F", "/");
-              finalId = matchedId.replace("%2F", "/");
+              matchedId = regexMatch[2].toString();
+              finalId = matchedId;
             }
 
-            if (kgIdArray.length < 1) {
-              kgIdArray = await page.evaluate(() => Array.from(document.querySelectorAll(".knowledge-panel a.bia"), element => element.getAttribute("href")));
-              if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
-                regex = /(%252C)(%252F.+?)(&)/;
-                regexMatch = regex.exec(kgIdArray[0]);
-                matchedId = regexMatch[2].toString().replace("%252F", "/");
-                finalId = matchedId.replace("%252F", "/");
-              }
-            }
-
+            console.log(finalId + " vs " + req.body["@id"]);
             if (("kg:" + finalId) === req.body["@id"]) {
-              let relationEntities = await page.evaluate(() => Array.from(document.querySelectorAll('.knowledge-panel [data-rentity^="/"]'), element => [element.getAttribute("data-rentity"), element.closest("[data-attrid]").getAttribute("data-attrid")]));
+              let relationEntities = await page.evaluate(() => Array.from(document.querySelectorAll('[data-rentity^="/"]'), element => [element.getAttribute("data-rentity"), element.closest("[data-attrid]").getAttribute("data-attrid")]));
               await process.entities(relationEntities, "kg:" + finalId);
-              let relationsLinks = await page.evaluate(() => Array.from(document.querySelectorAll('.knowledge-panel .kno-fv a[data-ved]'), element => [element.getAttribute("href"), element.closest("[data-attrid]").getAttribute("data-attrid")]));
+              let relationsLinks = await page.evaluate(() => Array.from(document.querySelectorAll('.kno-fv a[data-ved]'), element => [element.getAttribute("href"), element.closest("[data-attrid]").getAttribute("data-attrid")]));
               await process.links(relationsLinks, "kg:" + finalId);
-              let alsosearchedLinks = await page.evaluate(() => Array.from(document.querySelectorAll('.knowledge-panel [data-rentity=""] > a'), element => [element.getAttribute("href"), element.closest("[data-attrid]").getAttribute("data-attrid")]));
+              let alsosearchedLinks = await page.evaluate(() => Array.from(document.querySelectorAll('[data-rentity=""] > a'), element => [element.getAttribute("href"), element.closest("[data-attrid]").getAttribute("data-attrid")]));
               await process.links(alsosearchedLinks, "kg:" + finalId);
             }
           }

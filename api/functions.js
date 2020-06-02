@@ -3,7 +3,6 @@ const neo4j = require("neo4j-driver");
 const puppeteer = require("puppeteer");
 
 const processRelationEntities = async function (array, origin) {
-  console.log(origin);
   const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
 
   const promises =  array.map((link) => {
@@ -23,16 +22,19 @@ const processRelationEntities = async function (array, origin) {
           const session = driver.session();
           let typeString = "";
           const types = item["@type"];
+          const typeIndex = types.indexOf("Thing");
+          if (typeIndex !== -1) types.splice(typeIndex, 1);
           let i;
           for (i = 0; i < types.length; i++) {
-            typeString += ":" + types[i];
+            if (types[i] !== "Thing") {
+              typeString += ":" + types[i];
+            }
           }
           const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
           const description = (typeof(item.description) === "undefined") ? null : item.description;
           const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
           const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody;
           const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_");
-          console.log(relationType);
 
           await session.run(
             "MERGE (a"+typeString+" {id: $id})" +
@@ -70,39 +72,27 @@ const processRelationEntities = async function (array, origin) {
 };
 
 const processRelationLinks = async function (array, origin) {
-  console.log(origin);
   const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
   for (const link of array) {
     let browserRelationLinks = await puppeteer.launch({headless: true});
     let pageRelationsLinks = await browserRelationLinks.newPage();
     await pageRelationsLinks.setViewport({ width: 1920, height: 1080 });
     await pageRelationsLinks.goto("https://google.cz" + link[0], {waitUntil: 'load', timeout: 0});
-    if (await pageRelationsLinks.$(".knowledge-panel") !== null) {
+    if (await pageRelationsLinks.$("#xfoot") !== null) {
       let kgIdArray;
       let finalId;
       let regex;
       let regexMatch;
       let matchedId;
-      kgIdArray = await pageRelationsLinks.evaluate(() => Array.from(document.querySelectorAll("kno-share-button g-dialog a"), element => element.getAttribute("href")));
+
+      kgIdArray = await pageRelationsLinks.evaluate(() => Array.from(document.querySelectorAll("#xfoot script"), element => element.innerHTML));
 
       if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
-        regex = /(mid%3D)(.+?)(%26)/;
+        regex = /(\\x22)(\/.?\/.+?)(\\x22)/;
         regexMatch = regex.exec(kgIdArray[0]);
         if (regexMatch !== null) {
-          matchedId = regexMatch[2].toString().replace("%2F", "/");
-          finalId = matchedId.replace("%2F", "/");
-        }
-      }
-
-      if (kgIdArray.length < 1) {
-        kgIdArray = await pageRelationsLinks.evaluate(() => Array.from(document.querySelectorAll(".knowledge-panel a.bia"), element => element.getAttribute("href")));
-        if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
-          regex = /(%252C)(%252F.+?)(&)/;
-          regexMatch = regex.exec(kgIdArray[0]);
-          if (regexMatch !== null) {
-            matchedId = regexMatch[2].toString().replace("%252F", "/");
-            finalId = matchedId.replace("%252F", "/");
-          }
+          matchedId = regexMatch[2].toString();
+          finalId = matchedId;
         }
       }
 
@@ -124,16 +114,19 @@ const processRelationLinks = async function (array, origin) {
               const session = driver.session();
               let typeString = "";
               const types = item["@type"];
+              const typeIndex = types.indexOf("Thing");
+              if (typeIndex !== -1) types.splice(typeIndex, 1);
               let i;
               for (i = 0; i < types.length; i++) {
-                typeString += ":" + types[i];
+                if (types[i] !== "Thing") {
+                  typeString += ":" + types[i];
+                }
               }
               const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
               const description = (typeof(item.description) === "undefined") ? null : item.description;
               const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
               const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody;
               const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_");
-              console.log(relationType);
 
               await session.run(
                 "MERGE (a"+typeString+" {id: $id})" +
