@@ -4,6 +4,7 @@ import Neo4j from 'neo4j-driver';
 import * as vis from 'vis-network/dist/vis-network.min';
 import 'vis-network/dist/vis-network.min.css';
 import { defaults } from './defaults';
+import axios from "axios";
 import { EventController, CompletionEvent, ClickEdgeEvent, ClickNodeEvent, ErrorEvent } from './events';
 
 export const NEOVIS_DEFAULT_CONFIG = Symbol();
@@ -241,6 +242,13 @@ export default class NeoVis {
 
 	render() {
 
+    setTimeout(
+      () => {
+        document.querySelector(".graph-loader").style.display = "none";
+      },
+      60000
+    );
+
 		// connect to Neo4j instance
 		// run query
 		let recordCount = 0;
@@ -389,16 +397,30 @@ export default class NeoVis {
 					setTimeout(
 						() => {
 							this._network.stopSimulation();
+              document.querySelector(".graph-loader").style.display = "none";
 						},
-						10000
+						60000
 					);
 					this._events.generateEvent(CompletionEvent, {record_count: recordCount});
 
 					let neoVis = this;
-					this._network.on('click', function (params) {
+					this._network.on('click', async function (params) {
 						if (params.nodes.length > 0) {
 							let nodeId = this.getNodeAt(params.pointer.DOM);
-							neoVis._events.generateEvent(ClickNodeEvent, {nodeId: nodeId, node: neoVis._nodes[nodeId]});
+
+              await axios.get('/get/node?id='+nodeId).then(function (response) {
+                document.querySelector("#graphCard").style.display = "block";
+                const cardItem = response.data;
+                if (typeof(cardItem.properties.image) === "undefined") {
+                  const cardItemImageContent = document.createElement("img");
+                  cardItemImageContent.setAttribute("src", cardItem.properties.image);
+                  cardItemImageContent.setAttribute("alt", cardItem.properties.name);
+                  document.querySelector("#graphCard-image").appendChild(cardItemImageContent);
+                  document.querySelector("#graphCard-image").style.display = "block";
+                }
+                neoVis._events.generateEvent(ClickNodeEvent, {nodeId: nodeId, node: neoVis._nodes[nodeId]});
+              });
+
 						} else if (params.edges.length > 0) {
 							let edgeId = this.getEdgeAt(params.pointer.DOM);
 							neoVis._events.generateEvent(ClickEdgeEvent, {edgeId: edgeId, edge: neoVis._edges[edgeId]});
@@ -406,6 +428,7 @@ export default class NeoVis {
 					});
 				},
 				onError: (error) => {
+				  document.querySelector(".graph-loader").style.display = "none";
 					this._consoleLog(error, 'error');
 					this._events.generateEvent(ErrorEvent, {error_msg: error});
 				}

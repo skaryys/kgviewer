@@ -13,14 +13,14 @@
         <br v-if="result.description">
         <em>{{ result["@id"] }}</em>
       </Paragraph>
-      <button class="c-button" v-on:click="addNode(result)">Přidat do grafu</button>
+      <button class="c-button" v-on:click="addNode(result)" v-if="!noAdd">Přidat do grafu</button>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['result'],
+    props: ['result', "noAdd"],
     methods: {
       addNode: function (result) {
         this.$emit('add-root', result)

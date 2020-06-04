@@ -12,6 +12,7 @@
         <Col :xs="12" :sm="6" :lg="4" :xl="3" style="display: flex; margin-bottom: 3rem;">
           <Card
             :result="entity.result"
+            :no-add="false"
             v-on:add-root="addNode($event)"
           ></Card>
         </Col>
