@@ -36,6 +36,7 @@ const defaults = {
 			}
 		},
 		edges: {
+		  length: 25,
 			hoverWidth: 0,
 			selectionWidth: 0,
 			smooth: {
@@ -43,7 +44,7 @@ const defaults = {
 				roundness: 0
 			},
 			font: {
-				size: 9,
+				size: 14,
 				strokeWidth: 0,
 				align: 'top'
 			},

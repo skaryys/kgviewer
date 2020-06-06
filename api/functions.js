@@ -34,7 +34,7 @@ const processRelationEntities = async function (array, origin) {
           const description = (typeof(item.description) === "undefined") ? null : item.description;
           const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
           const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody;
-          const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_");
+          const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_").replace(/ /g, "_");
 
           await session.run(
             "MERGE (a"+typeString+" {id: $id})" +
@@ -126,7 +126,7 @@ const processRelationLinks = async function (array, origin) {
               const description = (typeof(item.description) === "undefined") ? null : item.description;
               const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
               const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody;
-              const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_");
+              const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_").replace(/ /g, "_");
 
               await session.run(
                 "MERGE (a"+typeString+" {id: $id})" +

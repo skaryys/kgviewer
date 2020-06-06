@@ -4,7 +4,6 @@ import Neo4j from 'neo4j-driver';
 import * as vis from 'vis-network/dist/vis-network.min';
 import 'vis-network/dist/vis-network.min.css';
 import { defaults } from './defaults';
-import axios from "axios";
 import { EventController, CompletionEvent, ClickEdgeEvent, ClickNodeEvent, ErrorEvent } from './events';
 
 export const NEOVIS_DEFAULT_CONFIG = Symbol();
@@ -180,13 +179,20 @@ export default class NeoVis {
 				node.group = 0;
 			}
 		}
-		// set configured/all properties as tooltip
-		/*node.title = '';
+		//set configured/all properties as tooltip
+		node.title = '<div style="max-width:25rem; white-space: normal; overflow: hidden;">';
+		if (typeof(neo4jNode.properties.image) !== "undefined") {
+		  node.title += `<div class="c-mediaWrapper-16_9"><img src="${neo4jNode.properties.image}" alt="${neo4jNode.properties.name}" style="width: 100%; max-width: 100%; object-fit: cover;" /></div>`;
+    }
 		for (const key of title_properties) {
 			if (neo4jNode.properties.hasOwnProperty(key)) {
-				node.title += this.propertyToString(key, neo4jNode.properties[key]);
+			  if (key !== "image") {
+          node.title += this.propertyToString(key, neo4jNode.properties[key]);
+        }
 			}
-		}*/
+		}
+		node.title += '</div>';
+
 		return node;
 	}
 
@@ -224,7 +230,7 @@ export default class NeoVis {
 			edge.label = r.type;
 		}
 
-		return edge;
+    return edge;
 	}
 
 	propertyToString(key, value) {
@@ -324,44 +330,61 @@ export default class NeoVis {
 								size: 26,
 								strokeWidth: 7
 							},
+              shapeProperties: {
+                interpolation: false
+              }
 						},
 						edges: {
 						  width: 1,
 							arrows: {
 								to: {enabled: this._config.arrows || false} // FIXME: handle default value
 							},
-							length: 300,
+							length: 25,
               color: {
 							  inherit: false
               },
               font: {
-							  size: 10,
+							  size: 14,
                 align: "middle"
               }
 						},
 						layout: {
-							improvedLayout: true,
+							improvedLayout: false,
 							hierarchical: {
 								enabled: this._config.hierarchical || false,
 								sortMethod: this._config.hierarchical_sort_method || 'hubsize'
 							}
 						},
-						physics: {
-							enabled: true,
-							timestep: 0.5,
-							stabilization: {
-							     iterations: 1000,
-                   fit: false
-							},
-
-							adaptiveTimestep: true,
-							barnesHut: {
-							   gravitationalConstant: -8000,
-							     springConstant: 0.04,
-							     springLength: 95
-              }
-						}
+            physics: {
+              barnesHut:{
+                gravitationalConstant: -60000,
+                springConstant: 0.02,
+                springLength: 25
+              },
+              stabilization: {
+                iterations: 3000,
+                enabled: true,
+                fit: true
+              },
+            },
+            interaction: {
+              hover: true,
+              keyboard: {
+                enabled: true,
+                bindToWindow: false
+              },
+              navigationButtons: true,
+              hideEdgesOnDrag: true,
+            }
 					};
+
+					Object.values(this._edges).map((edge) => {
+            edge.title = '<div style="max-width:fit-content; white-space: normal; overflow: hidden;">';
+            edge.title += this._nodes[edge.from]["label"] + "<br>";
+            edge.title += edge.label + "<br>";
+            edge.title += ">" + this._nodes[edge.to]["label"];
+            edge.title += '</div>';
+          });
 
 					const container = this._container;
 					this._data = {
@@ -407,20 +430,8 @@ export default class NeoVis {
 					this._network.on('click', async function (params) {
 						if (params.nodes.length > 0) {
 							let nodeId = this.getNodeAt(params.pointer.DOM);
-
-              await axios.get('/get/node?id='+nodeId).then(function (response) {
-                document.querySelector("#graphCard").style.display = "block";
-                const cardItem = response.data;
-                if (typeof(cardItem.properties.image) === "undefined") {
-                  const cardItemImageContent = document.createElement("img");
-                  cardItemImageContent.setAttribute("src", cardItem.properties.image);
-                  cardItemImageContent.setAttribute("alt", cardItem.properties.name);
-                  document.querySelector("#graphCard-image").appendChild(cardItemImageContent);
-                  document.querySelector("#graphCard-image").style.display = "block";
-                }
                 neoVis._events.generateEvent(ClickNodeEvent, {nodeId: nodeId, node: neoVis._nodes[nodeId]});
-              });
-
+                console.log(neoVis._nodes[nodeId]);
 						} else if (params.edges.length > 0) {
 							let edgeId = this.getEdgeAt(params.pointer.DOM);
 							neoVis._events.generateEvent(ClickEdgeEvent, {edgeId: edgeId, edge: neoVis._edges[edgeId]});

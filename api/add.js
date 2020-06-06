@@ -68,8 +68,10 @@ router.post('/add/relatives', function (req, res, next) {
             if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
               regex = /(\\x22)(\/.?\/.+?)(\\x22)/;
               regexMatch = regex.exec(kgIdArray[0]);
-              matchedId = regexMatch[2].toString();
-              finalId = matchedId;
+              if (regexMatch !== null) {
+                matchedId = regexMatch[2].toString();
+                finalId = matchedId;
+              }
             }
 
             console.log(finalId + " vs " + req.body["@id"]);

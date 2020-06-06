@@ -130,9 +130,9 @@
         if (this.whatSearch == 0) {
           return "";
         } else if (this.whatSearch == 1) {
-          return "AND n.name CONTAINS '" + this.searchString + "' ";
+          return "AND (n.name CONTAINS '" + this.searchString + "' OR m.name CONTAINS '" + this.searchString + "') ";
         } else if (this.whatSearch == 2) {
-          return "AND n:" + this.searchType + " ";
+          return "AND (n:" + this.searchType + " OR m:" + this.searchType + ") ";
         } else if (this.whatSearch == 3) {
           return this.searchString;
         }
