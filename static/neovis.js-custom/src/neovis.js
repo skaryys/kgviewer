@@ -179,10 +179,16 @@ export default class NeoVis {
 				node.group = 0;
 			}
 		}
+
 		//set configured/all properties as tooltip
 		node.title = '<div style="max-width:25rem; white-space: normal; overflow: hidden;">';
 		if (typeof(neo4jNode.properties.image) !== "undefined") {
 		  node.title += `<div class="c-mediaWrapper-16_9"><img src="${neo4jNode.properties.image}" alt="${neo4jNode.properties.name}" style="width: 100%; max-width: 100%; object-fit: cover;" /></div>`;
+    }
+		if (neo4jNode.labels.length > 0) {
+      node.title += "<strong>Typ:</strong> " + neo4jNode.labels.toString() + "<br>";
+    } else {
+		  node.title += "<strong>Typ:</strong> Nespecifikovaný <br>";
     }
 		for (const key of title_properties) {
 			if (neo4jNode.properties.hasOwnProperty(key)) {
@@ -252,7 +258,7 @@ export default class NeoVis {
       () => {
         document.querySelector(".graph-loader").style.display = "none";
       },
-      60000
+      300000
     );
 
 		// connect to Neo4j instance
@@ -280,6 +286,7 @@ export default class NeoVis {
 								this._addNode(node);
 							} catch (e) {
 								this._consoleLog(e, 'error');
+								alert("Nastala neznámá chyba. Zkontrolujte nastavení nástroje či zkuste znovu aktualizovat graf.")
 							}
 
 						} else if (v instanceof Neo4j.types.Relationship) {
@@ -327,8 +334,8 @@ export default class NeoVis {
 							shape: 'dot',
               size: 25,
 							font: {
-								size: 26,
-								strokeWidth: 7
+								size: 27,
+								strokeWidth: 8
 							},
               shapeProperties: {
                 interpolation: false
@@ -339,14 +346,14 @@ export default class NeoVis {
 							arrows: {
 								to: {enabled: this._config.arrows || false} // FIXME: handle default value
 							},
-							length: 25,
+							length: 600,
               color: {
-							  inherit: false
+							  inherit: false,
               },
               font: {
-							  size: 14,
+							  size: 15,
                 align: "middle"
-              }
+              },
 						},
 						layout: {
 							improvedLayout: false,
@@ -358,8 +365,9 @@ export default class NeoVis {
             physics: {
               barnesHut:{
                 gravitationalConstant: -60000,
-                springConstant: 0.02,
-                springLength: 25
+                springConstant: 0.2,
+                springLength: 600,
+                theta: 0.65
               },
               stabilization: {
                 iterations: 3000,
@@ -422,7 +430,7 @@ export default class NeoVis {
 							this._network.stopSimulation();
               document.querySelector(".graph-loader").style.display = "none";
 						},
-						60000
+						300000
 					);
 					this._events.generateEvent(CompletionEvent, {record_count: recordCount});
 
@@ -442,6 +450,7 @@ export default class NeoVis {
 				  document.querySelector(".graph-loader").style.display = "none";
 					this._consoleLog(error, 'error');
 					this._events.generateEvent(ErrorEvent, {error_msg: error});
+					alert("Vznikla neznámá chyba. Zkuste to znovu.");
 				}
 			});
 	}

@@ -36,13 +36,9 @@ const defaults = {
 			}
 		},
 		edges: {
-		  length: 25,
+		  length: 600,
 			hoverWidth: 0,
 			selectionWidth: 0,
-			smooth: {
-				type: 'continuous',
-				roundness: 0
-			},
 			font: {
 				size: 14,
 				strokeWidth: 0,
@@ -57,7 +53,7 @@ const defaults = {
 					type: 'arrow',
 					scaleFactor: 0.5
 				}
-			}
+			},
 		}
 
 	}

@@ -6,7 +6,7 @@
         <Col>
           <select class="c-input" v-model="whatSearch">
             <option value="0">Vše</option>
-            <option value="1">Hledat uzel dle jména</option>
+            <option value="1">Hledat uzly dle jména</option>
             <option value="2">Hledat uzly daného typu</option>
             <option value="3">Hledat pomocí jazyka CYPHER</option>
           </select>
@@ -19,12 +19,9 @@
             </option>
           </select>
         </Col>
-        <Col class="xs-stretch">
-          <button class="c-button a-button" @click="drawGraph()" v-if="(whatSearch != 0)">Hledat</button>
-        </Col>
-        <Col class="h-displayFlex xs-itemsCenter xs-wrap xs-stretch">
+        <Col class="h-displayFlex xs-itemsCenter xs-wrap xs-stretch" v-if="(whatSearch != 3)">
           <div class="c-svgInput h-displayInlineBlock">
-            <input type="checkbox" name="class_nodes" id="class_nodes" v-model="cypherNodes" @change="drawGraph()">
+            <input type="checkbox" name="class_nodes" id="class_nodes" v-model="cypherNodes">
             <label for="class_nodes">
               <svg overflow="scroll" baseProfile="tiny" version="1.1" viewBox="0 0 10.001 7.993" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.428,0L3.936,4.7L1.574,2.229L0,3.875L3.149,7.17l0.787,0.824l6.066-6.347L8.428,0z" fill-rule="evenodd"></path>
@@ -32,6 +29,12 @@
             </label>
           </div>
           <label class="c-paragraph node-label" for="class_nodes">Zobrazit typy</label>
+        </Col>
+        <Col class="xs-stretch" v-if="(whatSearch != 3)">
+          <input class="c-input limit-input" type="number" min="0" v-model="nodesLimit" placeholder="Limit" />
+        </Col>
+        <Col class="xs-stretch">
+          <button class="c-button a-button" @click="drawGraph()">Aktualizovat</button>
         </Col>
       </Row>
     </div>
@@ -76,6 +79,11 @@
         margin-bottom: 0;
         margin-left: 1rem;
       }
+
+      .limit-input {
+        width: 8rem;
+        text-align: center;
+      }
     }
   }
 
@@ -112,7 +120,8 @@
         whatSearch: 0,
         searchString: "",
         searchType: "Person",
-        labels: []
+        labels: [],
+        nodesLimit: 300
       }
     },
     mounted() {
@@ -156,7 +165,7 @@
               },
             },
             arrows: true,
-            initial_cypher: (this.whatSearch == 3) ? this.searchString : "MATCH (n)-[r]->(m) WHERE id(n) > 0 " + this.cypherNodesString() + this.searching() +"RETURN n,r,m"
+            initial_cypher: (this.whatSearch == 3) ? this.searchString : "MATCH (n)-[r]->(m) WHERE id(n) > 0 " + this.cypherNodesString() + this.searching() +"RETURN n,r,m LIMIT " + this.nodesLimit
           };
           const viz = new NeoVis.default(config);
           viz.render();
