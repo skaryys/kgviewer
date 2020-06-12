@@ -9,7 +9,7 @@
       </Paragraph>
       <Paragraph>
         Aplikace však nepracuje přímo se samotným znalostním grafem společnosti Google. Ten není veřejně dostupný, respektive s pomocí jeho veřejného API nelze získat informace o vztazích mezi jednotlivými uzly. Z tohoto důvodu tak byla tato aplikace vyvinuta, a pracuje právě již jak se zmíněným API, tak s výsledky klasického vyhledávání pomocí Googlu.<br><br>
-        Tato stránka má sloužit především nadšencům a akademikům, kteří jsou s problematikou znalostních grafů obeznámeni. Byla vytvořena v rámci diplomové práce Martin Škáry <i>Vytvoření nástroje pro zkoumání vztahů v rámci Google Knowledge Graph</i>.
+        Tato stránka má sloužit především nadšencům a akademikům, kteří jsou s problematikou znalostních grafů obeznámeni. Byla vytvořena v rámci diplomové práce Martina Škáry <i>Vytvoření nástroje pro zkoumání vztahů v rámci Google Knowledge Graph</i>.
       </Paragraph>
       <Heading2>
         Jak to funguje?
@@ -38,7 +38,7 @@
         Vizualizace grafu
       </Heading3>
       <Paragraph>
-        Pokud chcete vidět dosavadní výsledky, zvolte možnost "Zobrazit dosavadní graf". Zde jsou vidět všechny uzly grafu a vztahy mezi nimi, které by z dosavadně již přidaných entit schopen nástroj nalézt. Mimo to zde lze výsledný graf exportovat do vybraných formátů.
+        Pokud chcete vidět dosavadní výsledky, zvolte možnost "Zobrazit dosavadní graf". Zde jsou vidět všechny uzly grafu a vztahy mezi nimi, které by z dosavadně již přidaných entit schopen nástroj nalézt.
       </Paragraph>
   </Container>
 </template>

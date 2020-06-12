@@ -31,9 +31,9 @@ const processRelationEntities = async function (array, origin) {
             }
           }
           const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
-          const description = (typeof(item.description) === "undefined") ? null : item.description;
+          const description = (typeof(item.description) === "undefined") ? null : item.description.replace(/"/g, "'");
           const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
-          const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody;
+          const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody.replace(/"/g, "'").replace(/\n/g, " ");
           const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_").replace(/ /g, "_");
 
           await session.run(
@@ -123,9 +123,9 @@ const processRelationLinks = async function (array, origin) {
                 }
               }
               const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
-              const description = (typeof(item.description) === "undefined") ? null : item.description;
+              const description = (typeof(item.description) === "undefined") ? null : item.description.replace(/"/g, "'");
               const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
-              const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody;
+              const detailedDescription = (typeof(item.detailedDescription) === "undefined") ? null : item.detailedDescription.articleBody.replace(/"/g, "'").replace(/\n/g, " ");
               const relationType = link[1].toUpperCase().substring(4).replace(/\/|:/g, "_").replace(/ /g, "_");
 
               await session.run(

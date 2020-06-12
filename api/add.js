@@ -22,9 +22,9 @@ router.post('/add/single', async function (req, res, next) {
   }
 
   const imageUrl = (typeof(req.body.image) === "undefined") ? null : req.body.image.contentUrl;
-  const description = (typeof(req.body.description) === "undefined") ? null : req.body.description;
+  const description = (typeof(req.body.description) === "undefined") ? null : req.body.description.replace(/"/g, "'");
   const entityUrl = (typeof(req.body.url) === "undefined") ? null : req.body.url;
-  const detailedDescription = (typeof(req.body.detailedDescription) === "undefined") ? null : req.body.detailedDescription.articleBody;
+  const detailedDescription = (typeof(req.body.detailedDescription) === "undefined") ? null : req.body.detailedDescription.articleBody.replace(/"/g, "").replace(/\n/g, " ");
 
   session.run(
     "MERGE (n"+typeString+" {id: $id})" +
