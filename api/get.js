@@ -2,6 +2,7 @@ const { Router } = require('express');
 const neo4j = require("neo4j-driver");
 const jp = require("jsonpath");
 const fs = require('fs');
+const axios = require("axios");
 
 const router = Router();
 
@@ -64,6 +65,21 @@ router.get("/get/all/csv", function (req, res, next) {
     driver.close();
     console.log(result.records[0]._fields[0]);
     res.send(result.records[0]._fields[0]);
+  });
+});
+
+router.get("/get/all/rdf", function (req, res, next) {
+  axios.post('http://neo4j:kgviewer@localhost:7474/rdf/neo4j/cypher', {
+    cypher: "MATCH path = (n)-[r]->(m) RETURN path",
+    format: "RDF/XML"
+    }
+  ).then(function (response) {
+    res.charset = 'utf-8';
+    res.set({"Content-Disposition":"attachment; filename=\"graph.rdf\""});
+    res.send(response.data);
+  })
+  .catch(function (error) {
+    console.log('Error ' + error.message)
   });
 });
 

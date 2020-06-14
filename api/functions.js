@@ -22,14 +22,11 @@ const processRelationEntities = async function (array, origin) {
           const session = driver.session();
           let typeString = "";
           const types = item["@type"];
-          const typeIndex = types.indexOf("Thing");
-          if (typeIndex !== -1) types.splice(typeIndex, 1);
           let i;
           for (i = 0; i < types.length; i++) {
-            if (types[i] !== "Thing") {
               typeString += ":" + types[i];
-            }
           }
+
           const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
           const description = (typeof(item.description) === "undefined") ? null : item.description.replace(/"/g, "'");
           const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
@@ -114,14 +111,11 @@ const processRelationLinks = async function (array, origin) {
               const session = driver.session();
               let typeString = "";
               const types = item["@type"];
-              const typeIndex = types.indexOf("Thing");
-              if (typeIndex !== -1) types.splice(typeIndex, 1);
               let i;
               for (i = 0; i < types.length; i++) {
-                if (types[i] !== "Thing") {
                   typeString += ":" + types[i];
-                }
               }
+
               const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
               const description = (typeof(item.description) === "undefined") ? null : item.description.replace(/"/g, "'");
               const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
@@ -172,13 +166,13 @@ const processLabelNode = async function (labels, node) {
   for (i = 0; i < labels.length; i++) {
     const session = driver.session();
     await session.run(
-      "MERGE (a:Class {className: $label}) set a = {className: $label}",
+      "MERGE (a:Class {name: $label}) set a = {name: $label}",
       {
         label: labels[i]
       }
     ).then(async function() {
       await session.run(
-        'MATCH (a),(b) WHERE a.id = $firstArg AND b.className = $secondArg MERGE (a)-[r:IS]->(b) RETURN(r)',
+        'MATCH (a),(b) WHERE a.id = $firstArg AND b.name = $secondArg MERGE (a)-[r:IS]->(b) RETURN(r)',
         {
           firstArg: node,
           secondArg: labels[i],

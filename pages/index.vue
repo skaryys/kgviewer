@@ -12,6 +12,34 @@
         Tato stránka má sloužit především nadšencům a akademikům, kteří jsou s problematikou znalostních grafů obeznámeni. Byla vytvořena v rámci diplomové práce Martina Škáry <i>Vytvoření nástroje pro zkoumání vztahů v rámci Google Knowledge Graph</i>.
       </Paragraph>
       <Heading2>
+        Výsledky ke stažení
+      </Heading2>
+      <Paragraph>
+        Samotný nástroj má svá omezení týkající se zejména nesnadného získávání dat a v určitých případech nemusí být úplně stabilní, zejména na počítačích s menší operační pamětí. I proto lze dosavadní výsledky/data stáhnout v několika formátech.
+      </Paragraph>
+      <Row>
+        <Col class="xs-stretch" style="margin-bottom: 2rem;">
+          <a href="/get/all/json" class="c-button">
+            JSON
+          </a>
+        </Col>
+        <Col class="xs-stretch" style="margin-bottom: 2rem;">
+          <a href="/get/all/csv" class="c-button">
+            CSV
+          </a>
+        </Col>
+        <Col class="xs-stretch" style="margin-bottom: 2rem;">
+          <a href="/get/all/rdf" class="c-button">
+            RDF
+          </a>
+        </Col>
+        <Col class="xs-stretch" style="margin-bottom: 2rem;">
+          <a href="http://localhost:7474/rdf/neo4j/onto" class="c-button">
+            Ontologie (OWL)
+          </a>
+        </Col>
+      </Row>
+      <Heading2>
         Jak to funguje?
       </Heading2>
       <Paragraph>

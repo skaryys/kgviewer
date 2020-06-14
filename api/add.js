@@ -12,13 +12,9 @@ router.post('/add/single', async function (req, res, next) {
 
   let typeString = "";
   const types = req.body["@type"];
-  const typeIndex = types.indexOf("Thing");
-  if (typeIndex !== -1) types.splice(typeIndex, 1);
   let i;
   for (i = 0; i < types.length; i++) {
-    if (types[i] !== "Thing") {
       typeString += ":" + types[i];
-    }
   }
 
   const imageUrl = (typeof(req.body.image) === "undefined") ? null : req.body.image.contentUrl;

@@ -101,7 +101,7 @@ export default class NeoVis {
 	 */
 	async buildNodeVisObject(neo4jNode, session = null) {
 		let node = {};
-		let label = neo4jNode.labels[0];
+		let label = neo4jNode.labels[neo4jNode.labels.length - 1];
 
 		let labelConfig = this._config && this._config.labels && (this._config.labels[label] || this._config.labels[NEOVIS_DEFAULT_CONFIG]);
 
@@ -170,7 +170,6 @@ export default class NeoVis {
 			try {
 				if (neo4jNode.properties[communityKey]) {
 					node.group = neo4jNode.properties[communityKey].toNumber() || label || 0;  // FIXME: cast to Integer
-
 				} else {
 					node.group = 0;
 				}
@@ -186,7 +185,7 @@ export default class NeoVis {
 		  node.title += `<div class="c-mediaWrapper-16_9"><img src="${neo4jNode.properties.image}" alt="${neo4jNode.properties.name}" style="width: 100%; max-width: 100%; object-fit: cover;" /></div>`;
     }
 		if (neo4jNode.labels.length > 0) {
-      node.title += "<strong>Typ:</strong> " + neo4jNode.labels.toString() + "<br>";
+      node.title += "<strong>Typ:</strong> " + neo4jNode.labels.join(", ") + "<br>";
     } else {
 		  node.title += "<strong>Typ:</strong> Nespecifikovaný <br>";
     }
