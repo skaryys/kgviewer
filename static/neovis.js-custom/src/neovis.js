@@ -328,6 +328,21 @@ export default class NeoVis {
 				onCompleted: async () => {
           await Promise.all(dataBuildPromises);
 					session.close();
+
+					let smoothOptions = {};
+					if (document.querySelector("#quick_mode").checked) {
+					  smoothOptions = {
+					    enabled: true,
+              type: 'continuous',
+              roundness: 0.5
+            };
+          } else {
+            smoothOptions = {
+              enabled: true,
+              type: "dynamic"
+            };
+          }
+
 					let options = {
 						nodes: {
 							shape: 'dot',
@@ -353,6 +368,7 @@ export default class NeoVis {
 							  size: 15,
                 align: "middle"
               },
+              smooth: smoothOptions
 						},
 						layout: {
 							improvedLayout: false,

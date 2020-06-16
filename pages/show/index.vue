@@ -30,6 +30,17 @@
           </div>
           <label class="c-paragraph node-label" for="class_nodes">Zobrazit typy</label>
         </Col>
+        <Col class="h-displayFlex xs-itemsCenter xs-wrap xs-stretch">
+          <div class="c-svgInput h-displayInlineBlock">
+            <input type="checkbox" name="quick_mode" id="quick_mode" v-model="quickMode">
+            <label for="quick_mode">
+              <svg overflow="scroll" baseProfile="tiny" version="1.1" viewBox="0 0 10.001 7.993" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.428,0L3.936,4.7L1.574,2.229L0,3.875L3.149,7.17l0.787,0.824l6.066-6.347L8.428,0z" fill-rule="evenodd"></path>
+              </svg>
+            </label>
+          </div>
+          <label class="c-paragraph node-label" for="quick_mode">Rychlý mód</label>
+        </Col>
         <Col class="xs-stretch" v-if="(whatSearch != 3)">
           <input class="c-input limit-input" type="number" min="0" v-model="nodesLimit" placeholder="Limit" />
         </Col>
@@ -121,7 +132,8 @@
         searchString: "",
         searchType: "Person",
         labels: [],
-        nodesLimit: 300
+        nodesLimit: 300,
+        quickMode: false
       }
     },
     mounted() {
@@ -157,9 +169,6 @@
             server_user: "neo4j",
             server_password: "kgviewer",
             labels: {
-              "Class": {
-                "caption": "className"
-              },
               [NeoVis.NEOVIS_DEFAULT_CONFIG]: {
                 "caption": "name",
               },
