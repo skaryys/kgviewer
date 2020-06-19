@@ -71,7 +71,7 @@ const processRelationEntities = async function (array, origin) {
 const processRelationLinks = async function (array, origin) {
   const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
   for (const link of array) {
-    let browserRelationLinks = await puppeteer.launch({headless: true});
+    let browserRelationLinks = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
     let pageRelationsLinks = await browserRelationLinks.newPage();
     await pageRelationsLinks.setViewport({ width: 1920, height: 1080 });
     await pageRelationsLinks.goto("https://google.cz" + link[0], {waitUntil: 'load', timeout: 0});
