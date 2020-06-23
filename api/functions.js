@@ -12,13 +12,13 @@ const processRelationEntities = async function (array, origin) {
         'limit': 1,
         'indent': true,
         "key": "AIzaSyA94kim18rne3X5gzh7Gpl8Gt4SXz5yzuc",
-        "languages": "cs"
+        "languages": "en"
       }
     }).then(async function (response) {
       if (typeof response.data.itemListElement[0] !== 'undefined' && response.data.itemListElement[0]) {
         let item = response.data.itemListElement[0].result;
         if (item.name !== 'undefined' && item.name) {
-          console.log("přidán příbuzný node "+item.name);
+          console.log("node "+item.name);
           const session = driver.session();
           let typeString = "";
           const types = item["@type"];
@@ -74,7 +74,7 @@ const processRelationLinks = async function (array, origin) {
     let browserRelationLinks = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
     let pageRelationsLinks = await browserRelationLinks.newPage();
     await pageRelationsLinks.setViewport({ width: 1920, height: 1080 });
-    await pageRelationsLinks.goto("https://google.cz" + link[0], {waitUntil: 'load', timeout: 0});
+    await pageRelationsLinks.goto("https://google.com" + link[0], {waitUntil: 'load', timeout: 0});
     if (await pageRelationsLinks.$("#xfoot") !== null) {
       let kgIdArray;
       let finalId;
@@ -100,14 +100,14 @@ const processRelationLinks = async function (array, origin) {
             'limit': 1,
             'indent': true,
             "key": "AIzaSyA94kim18rne3X5gzh7Gpl8Gt4SXz5yzuc",
-            "languages": "cs"
+            "languages": "en"
           }
         }).then(async function (response) {
           if (typeof response.data.itemListElement[0] !== 'undefined' && response.data.itemListElement[0]) {
             let item = response.data.itemListElement[0].result;
 
             if (item.name !== 'undefined' && item.name) {
-              console.log("přidán příbuzný node "+item.name);
+              console.log("node "+item.name);
               const session = driver.session();
               let typeString = "";
               const types = item["@type"];
@@ -166,7 +166,7 @@ const processLabelNode = async function (labels, node) {
   for (i = 0; i < labels.length; i++) {
     const session = driver.session();
     await session.run(
-      "MERGE (a:Class {name: $label}) set a = {name: $label}",
+      "MERGE (a:Type {name: $label}) set a = {name: $label}",
       {
         label: labels[i]
       }

@@ -1,11 +1,11 @@
 <template>
   <Container class="addpage">
     <Heading1>
-      Přidání entity do grafu
+      Add entity to graph
     </Heading1>
     <div class="inputContainer">
       <input type="text" id="entityInput" class="c-input"/>
-      <button id="entityButton" class="c-button" v-on:click="findEntities()">Hledat entity</button>
+      <button id="entityButton" class="c-button" v-on:click="findEntities()">Search entities</button>
     </div>
     <Row v-if="foundEntities.length > 0" style="margin-top: 3rem;">
       <transition name="fade" v-for="entity in foundEntities" v-bind:key="entity.result.id" appear>
@@ -22,7 +22,7 @@
       <transition name="fade" appear>
         <Col :xs="12">
           <Paragraph>
-            Nenalezen žádný výsledek nebo jste ještě nezadali váš požadavek.
+            No result or no query.
           </Paragraph>
         </Col>
       </transition>
@@ -68,7 +68,7 @@
             'limit': 100,
             'indent': true,
             "key": "AIzaSyA94kim18rne3X5gzh7Gpl8Gt4SXz5yzuc",
-            "languages": "cs"
+            "languages": "en"
           }
         }).then(function (response) {
           self.foundEntities = response.data.itemListElement;

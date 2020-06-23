@@ -13,12 +13,12 @@ module.exports = {
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { property: 'og:title', content: 'Knowledge Graph Viewer' },
-      { property: 'og:description', name: 'description', content: 'Umožňuje zkoumání vztahů mezi entitami v rámci Google Knowledge Graph.' },
-      { property: 'og:url', content: 'localhost:3000' }, //TODO změnit po nasazení na produkci
-      { property: 'og:image', content: 'localhost:3000/ogimage.jpg' }, //TODO změnit po nasazení na produkci
+      { property: 'og:description', name: 'description', content: 'This application is used to show the relationships between entities in the Google Knowledge Graph.' },
+      { property: 'og:url', content: '89.221.219.40' },
+      { property: 'og:image', content: '89.221.219.40/ogimage.jpg' },
       { property: 'og:site_name', content: 'Knowledge Graph Viewer' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:locale', content: 'cs_CZ' },
+      { property: 'og:locale', content: 'en_US' },
       { name: 'msapplication-TileColor', content: '#2b5797' }
     ],
     link: [
@@ -29,7 +29,10 @@ module.exports = {
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
       { rel: 'manifest', href: '/site.webmanifest' },
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#5bbad5' }
-    ]
+    ],
+    script: [
+      { src: 'http://89.221.219.40/neovis.js-custom/dist/neovis.js' }
+    ],
   },
   /*
   ** Customize the progress-bar color

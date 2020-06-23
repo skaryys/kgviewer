@@ -4,7 +4,7 @@
     <div class="content-wrapper">
       <nuxt />
     </div>
-    <script src="/neovis.js-custom/dist/neovis.js"></script>
+    <script src="http://89.221.219.40/neovis.js-custom/dist/neovis.js"></script>
   </div>
 </template>
 

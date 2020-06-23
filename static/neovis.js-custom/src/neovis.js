@@ -185,9 +185,9 @@ export default class NeoVis {
 		  node.title += `<div class="c-mediaWrapper-16_9"><img src="${neo4jNode.properties.image}" alt="${neo4jNode.properties.name}" style="width: 100%; max-width: 100%; object-fit: cover;" /></div>`;
     }
 		if (neo4jNode.labels.length > 0) {
-      node.title += "<strong>Typ:</strong> " + neo4jNode.labels.join(", ") + "<br>";
+      node.title += "<strong>Type:</strong> " + neo4jNode.labels.join(", ") + "<br>";
     } else {
-		  node.title += "<strong>Typ:</strong> Nespecifikovaný <br>";
+		  node.title += "<strong>Type:</strong> Unknown <br>";
     }
 		for (const key of title_properties) {
 			if (neo4jNode.properties.hasOwnProperty(key)) {

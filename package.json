@@ -1,7 +1,7 @@
 {
   "name": "kgviewer",
   "version": "1.0.0",
-  "description": "umožňuje zkoumání vztahů mezi entitami v rámci Google Knowledge Graph",
+  "description": "This application is used to show the relationships between entities in the Google Knowledge Graph.",
   "author": "Martin Škára",
   "private": true,
   "scripts": {

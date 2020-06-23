@@ -44,7 +44,7 @@ router.post('/add/single', async function (req, res, next) {
 router.post('/add/relatives', function (req, res, next) {
     req.setTimeout(500000);
     let searchstring = req.body.name;
-    let url = 'https://www.google.cz/search?q='+searchstring;
+    let url = 'https://www.google.com/search?q='+searchstring;
 
     (async () => {
         try {

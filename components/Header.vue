@@ -7,10 +7,10 @@
       <nav class="nav">
         <ul class="nav-list">
           <li>
-            <a href="/show">Zobrazit dosavadní graf</a>
+            <a href="/show">Show current graph</a>
           </li>
           <li>
-            <a href="/add">Přidat novou entitu do grafu</a>
+            <a href="/add">Add entity to graph</a>
           </li>
         </ul>
       </nav>

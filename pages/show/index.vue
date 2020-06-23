@@ -5,10 +5,10 @@
       <Row>
         <Col>
           <select class="c-input" v-model="whatSearch">
-            <option value="0">Vše</option>
-            <option value="1">Hledat uzly dle jména</option>
-            <option value="2">Hledat uzly daného typu</option>
-            <option value="3">Hledat pomocí jazyka CYPHER</option>
+            <option value="0">All</option>
+            <option value="1">Search nodes by name</option>
+            <option value="2">Search nodes of a given type</option>
+            <option value="3">Search nodes by CYPHER</option>
           </select>
         </Col>
         <Col>
@@ -28,7 +28,7 @@
               </svg>
             </label>
           </div>
-          <label class="c-paragraph node-label" for="class_nodes">Zobrazit typy</label>
+          <label class="c-paragraph node-label" for="class_nodes">Show types</label>
         </Col>
         <Col class="h-displayFlex xs-itemsCenter xs-wrap xs-stretch">
           <div class="c-svgInput h-displayInlineBlock">
@@ -39,13 +39,13 @@
               </svg>
             </label>
           </div>
-          <label class="c-paragraph node-label" for="quick_mode">Rychlý mód</label>
+          <label class="c-paragraph node-label" for="quick_mode">Quick mode</label>
         </Col>
         <Col class="xs-stretch" v-if="(whatSearch != 3)">
           <input class="c-input limit-input" type="number" min="0" v-model="nodesLimit" placeholder="Limit" />
         </Col>
         <Col class="xs-stretch">
-          <button class="c-button a-button" @click="drawGraph()">Aktualizovat</button>
+          <button class="c-button a-button" @click="drawGraph()">Update</button>
         </Col>
       </Row>
     </div>
@@ -55,7 +55,7 @@
       </div>
       <div class="content">
         <div class="c-h2" id="graphCard-name" style="display: none">
-          Název
+          x
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@
         }
       },
       cypherNodesString: function() {
-        return (this.cypherNodes ? "" : "AND NOT n:Class AND NOT m:Class ");
+        return (this.cypherNodes ? "" : "AND NOT n:Type AND NOT m:Type ");
       },
       drawGraph: function () {
           document.querySelector(".graph-loader").style.display = "block";
