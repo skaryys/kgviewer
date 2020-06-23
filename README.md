@@ -1,10 +1,10 @@
 # Knowledge Graph Viewer
 
-Tato aplikace slouží k zobrazení vztahů mezi entitami v Google Knowledge Graph.
 
-Aplikace se nepřipojuje přímo k samotnému grafu - namísto toho se připojuje ke grafové databázi, do které jednotlivé entity mohou být přidávány pomocí vytvořeného grafického rozhraní.
+This application is used to show the relationships between entities in the Google Knowledge Graph.
 
-Celý tento projekt byl vyvíjen jako součást diplomové práce.
+The application does not connect directly to the graph itself - instead it connects to the graph database, to which individual entities can be added using the created graphical interface.
 
-V současnosti je aplikace v rané fázi vývoje a není dostupná online. 
-Vzhledem k povaze aplikace zde nebude návod pro zprovoznění, jelikož bez stejné databáze je stejně aplikace k ničemu.
+The whole project was developed as part of the diploma thesis.
+
+The application itself, as well as its basic description can be found here: http://89.221.219.40/.
