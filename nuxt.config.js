@@ -48,7 +48,8 @@ module.exports = {
     "skar-is/assets/scss/components/texts.scss",
     "skar-is/assets/scss/components/forms.scss",
     "skar-is/assets/scss/components/card.scss",
-    "skar-is/assets/scss/components/media.scss"
+    "skar-is/assets/scss/components/media.scss",
+    "skar-is/assets/scss/components/modal.scss"
   ],
   /*
   ** Plugins to load before mounting the App
