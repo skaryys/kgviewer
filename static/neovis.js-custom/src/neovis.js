@@ -191,8 +191,10 @@ export default class NeoVis {
     }
 		for (const key of title_properties) {
 			if (neo4jNode.properties.hasOwnProperty(key)) {
-			  if (key !== "image" || key !== "id") {
-          node.title += this.propertyToString(key, neo4jNode.properties[key]);
+			  if (key !== "image") {
+			    if (key !== "id") {
+            node.title += this.propertyToString(key, neo4jNode.properties[key]);
+          }
         }
 			}
 		}
