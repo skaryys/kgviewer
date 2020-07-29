@@ -9,9 +9,6 @@
       </div>
       <Paragraph>
         {{ result.description }}
-        <br v-if="result.description">
-        <br v-if="result.description">
-        <em>{{ result["@id"] }}</em>
       </Paragraph>
       <button class="c-button" v-on:click="addNode(result)" v-if="!noAdd">Add to graph</button>
     </div>
