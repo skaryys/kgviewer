@@ -33,7 +33,7 @@
           </a>
         </Col>
         <Col class="xs-stretch" style="margin-bottom: 2rem;">
-          <a href="http://localhost:7474/rdf/neo4j/onto" class="c-button">
+          <a href="/get/all/onto" class="c-button">
             Ontology (OWL)
           </a>
         </Col>

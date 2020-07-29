@@ -83,4 +83,16 @@ router.get("/get/all/rdf", function (req, res, next) {
   });
 });
 
+router.get("/get/all/onto", function (req, res, next) {
+  axios.post('http://neo4j:kgviewer@localhost:7474/rdf/neo4j/onto')
+    .then(function (response) {
+    res.charset = 'utf-8';
+    res.set({"Content-Disposition":"attachment; filename=\"onto.rdf\""});
+    res.send(response.data);
+  })
+    .catch(function (error) {
+      console.log('Error ' + error.message)
+    });
+});
+
 module.exports = router;
