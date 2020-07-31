@@ -32,9 +32,17 @@
             RDF
           </a>
         </Col>
+      </Row>
+      <Heading3>
+        Ontology for download
+      </Heading3>
+      <Paragraph>
+        You can also download ontology of node types and relationships from graph in the OWL format.
+      </Paragraph>
+      <Row>
         <Col class="xs-stretch" style="margin-bottom: 2rem;">
           <a href="/get/onto" class="c-button" download>
-            Ontology (OWL)
+            Download ontology (OWL)
           </a>
         </Col>
       </Row>
