@@ -2,8 +2,19 @@ const { Router } = require('express');
 const puppeteer = require("puppeteer");
 const neo4j = require("neo4j-driver");
 const process = require("./functions");
+const wee_db = require('wee-db');
+const db = wee_db('static/db.json');
+const cron = require("node-cron");
+const axios = require("axios");
+let cronRunning = false;
 
 const router = Router();
+
+router.post("/add/to/queue", async function (req, res, next) {
+  db.insert('objects', req.body);
+
+  await res.json({});
+});
 
 router.post('/add/single', async function (req, res, next) {
   req.setTimeout(500000);
@@ -88,6 +99,36 @@ router.post('/add/relatives', function (req, res, next) {
           res.json({});
         }
     })();
+});
+
+cron.schedule("* * * * *", async function() {
+  if (!cronRunning) {
+    cronRunning = true;
+
+    console.log("cron started in "+new Date().toLocaleString());
+
+    const addingNode = async function() {
+      let resultObject = db._find("objects").value()[0];
+      if (typeof resultObject != "undefined") {
+        console.log("adding from queue - " + resultObject.name);
+        await axios.all([
+          axios.post('http://localhost:3001/add/single', resultObject),
+          axios.post('http://localhost:3001/add/relatives', resultObject)
+        ]).then(() => {
+          db._find("objects").value().shift();
+          addingNode();
+        }).catch(error => {
+          console.log(error);
+          cronRunning = false;
+        });
+      } else {
+        console.log("No nodes in queue");
+        cronRunning = false;
+      }
+    };
+
+    await addingNode();
+  }
 });
 
 module.exports = router;

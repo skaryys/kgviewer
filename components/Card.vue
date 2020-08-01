@@ -10,7 +10,7 @@
       <Paragraph>
         {{ result.description }}
       </Paragraph>
-      <button class="c-button" v-on:click="addNode(result)" v-if="!noAdd">Add to graph</button>
+      <button class="c-button" v-on:click="function(e) {addNode(e.target, result);}" v-if="!noAdd">Add to graph</button>
     </div>
   </div>
 </template>
@@ -19,7 +19,12 @@
   export default {
     props: ['result', "noAdd"],
     methods: {
-      addNode: function (result) {
+      addNode: function (button, result) {
+        button.innerHTML = 'Added to queue';
+        button.style.pointerEvents = 'none';
+        setTimeout(() => {
+          button.style.display = 'none';
+        }, 1000);
         this.$emit('add-root', result)
       }
     }
