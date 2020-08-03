@@ -23,8 +23,9 @@
         button.innerHTML = 'Added to queue';
         button.style.pointerEvents = 'none';
         setTimeout(() => {
-          button.style.display = 'none';
-        }, 1000);
+          button.innerHTML = 'Add to graph';
+          button.style.pointerEvents = 'auto';
+        }, 2000);
         this.$emit('add-root', result)
       }
     }
