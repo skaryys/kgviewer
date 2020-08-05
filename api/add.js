@@ -131,4 +131,38 @@ cron.schedule("* * * * *", async function() {
   }
 });
 
+cron.schedule("0 22 * * *", async function() {
+  console.log("automatic expanding of queue started in "+new Date().toLocaleString());
+
+  const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
+  const session = driver.session();
+
+  const result = await session.run(
+      'MATCH (n)-[r]->(m)\n' +
+      'WITH n, collect(m) AS classes\n' +
+      'WHERE ALL (x IN classes WHERE x:Type)\n' +
+      'RETURN n.id',
+  );
+
+  await result.records.map(async function(record) {
+    await axios.get('https://kgsearch.googleapis.com/v1/entities:search', {
+      params: {
+        "ids": record.get(0).substring(3),
+        'limit': 1,
+        'indent': true,
+        "key": "AIzaSyA94kim18rne3X5gzh7Gpl8Gt4SXz5yzuc",
+        "languages": "en"
+      }
+    }).then(function (response) {
+      const foundEntity = response.data.itemListElement[0].result;
+      db.insert('objects', foundEntity);
+    }).catch(error => {
+      console.log(error);
+    });
+  });
+
+  await session.close();
+  await driver.close();
+});
+
 module.exports = router;
