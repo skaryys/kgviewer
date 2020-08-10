@@ -46,6 +46,9 @@
         <Col class="xs-stretch">
           <button class="c-button a-button" @click="drawGraph()">Update</button>
         </Col>
+        <Col class="xs-stretch">
+          <button class="c-button a-button" @click="exportRDF()">Export</button>
+        </Col>
       </Row>
     </div>
 
@@ -140,6 +143,7 @@
 
 <script>
   import axios from "axios";
+  import FileDownload from "js-file-download";
   import HelpModal from "~/components/HelpModal.vue";
 
   export default {
@@ -196,10 +200,20 @@
               },
             },
             arrows: true,
-            initial_cypher: (this.whatSearch == 3) ? this.searchString : "MATCH (n)-[r]->(m) WHERE id(n) > 0 " + this.cypherNodesString() + this.searching() +"RETURN n,r,m ORDER BY id(n) DESC LIMIT " + this.nodesLimit
+            initial_cypher: (this.whatSearch == 3) ? this.searchString : "MATCH (n)-[r]->(m) WHERE id(n) > 0 " + this.cypherNodesString() + this.searching() +"RETURN n,r,m ORDER BY id(r) DESC LIMIT " + this.nodesLimit
           };
           const viz = new NeoVis.default(config);
           viz.render();
+      },
+      exportRDF: function() {
+        axios.get('/get/partial/rdf', {
+          params: {
+            cypher: (this.whatSearch == 3) ? this.searchString : "MATCH (n)-[r]->(m) WHERE id(n) > 0 " + this.cypherNodesString() + this.searching() + "RETURN n,r,m ORDER BY id(r) DESC LIMIT " + this.nodesLimit
+          }}).then(function (response) {
+            FileDownload(response.data, 'partial_graph.rdf');
+        }).catch(function (error) {
+          console.log('Error ' + error.message)
+        });
       }
     }
   }

@@ -83,6 +83,19 @@ router.get("/get/all/rdf", function (req, res, next) {
   });
 });
 
+router.get("/get/partial/rdf", function (req, res, next) {
+  axios.post('http://neo4j:kgviewer@localhost:7474/rdf/neo4j/cypher', {
+      cypher: req.query.cypher,
+      format: "RDF/XML"
+    }
+  ).then(function (response) {
+    res.json(response.data);
+  })
+    .catch(function (error) {
+      console.log('Error ' + error.message)
+    });
+});
+
 router.get("/get/onto", function (req, res, next) {
   axios.get('http://neo4j:kgviewer@localhost:7474/rdf/kgviewer/onto')
     .then(function (response) {
