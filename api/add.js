@@ -131,7 +131,7 @@ cron.schedule("* * * * *", async function() {
   }
 });
 
-cron.schedule("0 22 * * *", async function() {
+/*cron.schedule("0 22 * * *", async function() {
   console.log("automatic expanding of queue started in "+new Date().toLocaleString());
 
   const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
@@ -163,6 +163,6 @@ cron.schedule("0 22 * * *", async function() {
 
   await session.close();
   await driver.close();
-});
+});*/
 
 module.exports = router;

@@ -196,7 +196,7 @@
               },
             },
             arrows: true,
-            initial_cypher: (this.whatSearch == 3) ? this.searchString : "MATCH (n)-[r]->(m) WHERE id(n) > 0 " + this.cypherNodesString() + this.searching() +"RETURN n,r,m LIMIT " + this.nodesLimit
+            initial_cypher: (this.whatSearch == 3) ? this.searchString : "MATCH (n)-[r]->(m) WHERE id(n) > 0 " + this.cypherNodesString() + this.searching() +"RETURN n,r,m ORDER BY id(n) DESC LIMIT " + this.nodesLimit
           };
           const viz = new NeoVis.default(config);
           viz.render();
