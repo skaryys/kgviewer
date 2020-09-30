@@ -21,7 +21,7 @@
           Add entity to graph
         </Heading1>
         <div class="inputContainer">
-          <input type="text" id="entityInput" class="c-input"/>
+          <input type="text" id="entityInput" class="c-input" v-on:keyup.enter="findEntities()" />
           <button id="entityButton" class="c-button" v-on:click="findEntities()">Search entities</button>
         </div>
         <Row v-if="foundEntities.length > 0" style="margin-top: 3rem;">
@@ -94,22 +94,25 @@
     },
     methods: {
       findEntities: function () {
-        const self = this;
-        self.loader = true;
         const query = this.$el.querySelector("#entityInput").value;
 
-        axios.get('https://kgsearch.googleapis.com/v1/entities:search', {
-          params: {
-            'query': query,
-            'limit': 100,
-            'indent': true,
-            "key": "AIzaSyA94kim18rne3X5gzh7Gpl8Gt4SXz5yzuc",
-            "languages": "en"
-          }
-        }).then(function (response) {
-          self.foundEntities = response.data.itemListElement;
-          self.loader = false;
-        });
+        if (query !== "") {
+          const self = this;
+          self.loader = true;
+
+          axios.get('https://kgsearch.googleapis.com/v1/entities:search', {
+            params: {
+              'query': query,
+              'limit': 100,
+              'indent': true,
+              "key": "AIzaSyA94kim18rne3X5gzh7Gpl8Gt4SXz5yzuc",
+              "languages": "en"
+            }
+          }).then(function (response) {
+            self.foundEntities = response.data.itemListElement;
+            self.loader = false;
+          });
+        }
       },
 
       addNode: function (result) {
