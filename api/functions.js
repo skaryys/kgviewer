@@ -27,7 +27,7 @@ const processRelationEntities = async function (array, origin) {
               typeString += ":" + types[i];
           }
 
-          const enName = req.body.name.replace(/"/g, "");
+          const enName = item.name.replace(/"/g, "");
           const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
           const description = (typeof(item.description) === "undefined") ? null : item.description.replace(/"/g, "'");
           const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
