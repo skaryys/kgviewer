@@ -117,6 +117,7 @@ const processRelationLinks = async function (array, origin) {
                   typeString += ":" + types[i];
               }
 
+              const enName = item.name.replace(/"/g, "");
               const imageUrl = (typeof(item.image) === "undefined") ? null : item.image.contentUrl;
               const description = (typeof(item.description) === "undefined") ? null : item.description.replace(/"/g, "'");
               const entityUrl = (typeof(item.url) === "undefined") ? null : item.url;
@@ -127,7 +128,7 @@ const processRelationLinks = async function (array, origin) {
                 "MERGE (a"+typeString+" {id: $id})" +
                 "set a = {name: $name, id: $id, description: $description, detailedDescription: $detailedDescription, image: $image, url: $url}",
                 {
-                  name: item.name,
+                  name: enName,
                   id: item["@id"],
                   description: description,
                   detailedDescription: detailedDescription,
