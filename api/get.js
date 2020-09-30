@@ -32,6 +32,7 @@ router.get("/get/node", async function (req, res, next) {
 });
 
 router.get("/get/all/json", function (req, res, next) {
+  req.setTimeout(500000);
   const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
   const session = driver.session();
   session.run(
