@@ -5,8 +5,8 @@
         <Heading3>
           Entities waiting to be added
         </Heading3>
-        <Paragraph style="color: limegreen" v-if="queueEntities.length < 1">
-          No entities are waiting to be added
+        <Paragraph style="color: red" v-if="queueEntities.length < 1">
+          Waiting for entities to be added
         </Paragraph>
         <div v-if="queueEntities.length > 0">
           <Paragraph v-for="(entity, index) in queueEntities" v-bind:key="entity.id" style="margin-bottom: .5rem;">
