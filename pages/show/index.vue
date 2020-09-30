@@ -177,7 +177,7 @@
         if (this.whatSearch == 0) {
           return "";
         } else if (this.whatSearch == 1) {
-          return "AND (LOWER(n.name) CONTAINS LOWER('" + this.searchString + "') OR m.name CONTAINS LOWER('" + this.searchString + "')) ";
+          return "AND (toLower(n.name) CONTAINS toLower('" + this.searchString + "') OR m.name CONTAINS toLower('" + this.searchString + "')) ";
         } else if (this.whatSearch == 2) {
           return "AND (n:" + this.searchType + " OR m:" + this.searchType + ") ";
         } else if (this.whatSearch == 3) {
