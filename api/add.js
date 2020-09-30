@@ -28,6 +28,7 @@ router.post('/add/single', async function (req, res, next) {
       typeString += ":" + types[i];
   }
 
+  const name = req.body.name.replace(/"/g, "");
   const imageUrl = (typeof(req.body.image) === "undefined") ? null : req.body.image.contentUrl;
   const description = (typeof(req.body.description) === "undefined") ? null : req.body.description.replace(/"/g, "'");
   const entityUrl = (typeof(req.body.url) === "undefined") ? null : req.body.url;
@@ -37,7 +38,7 @@ router.post('/add/single', async function (req, res, next) {
     "MERGE (n"+typeString+" {id: $id})" +
     "set n = {name: $name, id: $id, description: $description, detailedDescription: $detailedDescription, image: $image, url: $url}",
     {
-      name: req.body.name,
+      name: name,
       id: req.body["@id"],
       description: description,
       detailedDescription: detailedDescription,

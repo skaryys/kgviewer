@@ -43,7 +43,13 @@ router.get("/get/all/json", function (req, res, next) {
     res.set({"Content-Disposition":"attachment; filename=\"graph.json\""});
     session.close();
     driver.close();
-    res.send(result);
+    let finalGraph = { "graph": [] };
+    let graphVar = result.records[0]._fields[0].replace(/\\"/g, '"').split(/\r?\n/);
+    graphVar.map((row) => {
+      let graphObjectObject = JSON.parse(row);
+      finalGraph["graph"].push(graphObjectObject);
+    });
+    res.send(finalGraph);
   });
 });
 
