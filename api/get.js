@@ -32,7 +32,6 @@ router.get("/get/node", async function (req, res, next) {
 });
 
 router.get("/get/all/json", function (req, res, next) {
-  req.setTimeout(500000);
   const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "kgviewer"));
   const session = driver.session();
   session.run(
@@ -44,13 +43,7 @@ router.get("/get/all/json", function (req, res, next) {
     res.set({"Content-Disposition":"attachment; filename=\"graph.json\""});
     session.close();
     driver.close();
-    let finalGraph = { "graph": [] };
-    let graphVar = result.records[0]._fields[0].replace(/\\"/g, '"').split(/\r?\n/);
-    graphVar.map((row) => {
-      let graphObjectObject = JSON.parse(row);
-      finalGraph["graph"].push(graphObjectObject);
-    });
-    res.send(finalGraph);
+    res.send(result.records[0]._fields[0]);
   });
 });
 
