@@ -41,10 +41,10 @@
           <label class="c-paragraph node-label" for="quick_mode">Quick mode</label>
         </Col>
         <Col class="xs-stretch" v-if="(whatSearch != 3)">
-          <input class="c-input limit-input" type="number" min="0" v-model="nodesLimit" placeholder="Limit" />
+          <input class="c-input limit-input" type="number" min="0" v-model="nodesLimit" placeholder="Limit" title="Limit" />
         </Col>
         <Col class="xs-stretch">
-          <button class="c-button a-button" @click="drawGraph()">Update</button>
+          <button class="c-button a-button" @click="drawGraph()">Search</button>
         </Col>
         <Col class="xs-stretch">
           <button class="c-button a-button" @click="exportRDF()">Export</button>
