@@ -257,7 +257,10 @@ export default class NeoVis {
 
     setTimeout(
       () => {
-        document.querySelector(".graph-loader").style.display = "none";
+        if (document.querySelector(".graph-loader").style.display !== "none") {
+          document.querySelector(".graph-loader").style.display = "none";
+          alert("No nodes were found.")
+        }
       },
       300000
     );
