@@ -86,13 +86,18 @@ const processRelationLinks = async function (array, origin) {
       kgIdArray = await pageRelationsLinks.evaluate(() => Array.from(document.querySelectorAll("#xfoot script"), element => element.innerHTML));
 
       if (kgIdArray.length > 0 && kgIdArray[0] !== null) {
-        regex = /(\\x22)(\/.?\/.+?)(\\x22)/;
+        regex = /(\\x22)(\/.?\/.+?)(\\x22)/g;
+	      let regexMatches = [];
         regexMatch = regex.exec(kgIdArray[0]);
-        if (regexMatch !== null) {
-          matchedId = regexMatch[2].toString();
-          finalId = matchedId;
+	      while (regexMatch != null) {
+    	    regexMatches.push(regexMatch[2].toString());
+          regexMatch = regex.exec(kgIdArray[0]);
+	      }
+        if (regexMatches.length > 0) {
+          finalId = regexMatches[regexMatches.length - 1];
         }
       }
+
 
       if (typeof(finalId) !== "undefined") {
         await axios.get('https://kgsearch.googleapis.com/v1/entities:search', {
