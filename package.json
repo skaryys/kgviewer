@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@nuxtjs/style-resources": "^1.0.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "cross-env": "^6.0.3",
     "express": "^4.17.1",
     "neo4j-driver": "^4.0.1",
