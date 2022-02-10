@@ -16,7 +16,7 @@
     "cross-env": "^6.0.3",
     "express": "^4.17.1",
     "neo4j-driver": "^4.0.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "nuxt": "^2.0.0",
     "popoto": "^2.0.18",
     "puppeteer": "^2.0.0",
