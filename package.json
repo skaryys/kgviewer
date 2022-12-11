@@ -14,7 +14,7 @@
     "@nuxtjs/style-resources": "^1.0.0",
     "axios": "^0.19.0",
     "cross-env": "^6.0.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "neo4j-driver": "^4.0.1",
     "node-sass": "^4.13.0",
     "nuxt": "^2.0.0",
